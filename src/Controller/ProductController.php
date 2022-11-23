@@ -24,12 +24,13 @@ class ProductController extends AbstractController
     public function show(Product $product, ExchangeRate $exchangeRate): Response
     {
         //TODO : Convert price of the product into dollar and yen, and send it to the twig template
-        $dollarPrice = $exchangeRate->convertEurToDollar($product->getPrice());
+        $priceUsd = $exchangeRate->convertEurToDollar($product->getPrice());
+        $priceYen = $exchangeRate->convertEurToYen($product->getPrice());
 
         return $this->render('product/details.html.twig', [
             'product' => $product,
-            'dollar_price' => 0,
-            'yen_price' => 0,
+            'dollar_price' => $priceUsd,
+            'yen_price' => $priceYen,
         ]);
     }
 }
